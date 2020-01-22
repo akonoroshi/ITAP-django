@@ -25,7 +25,7 @@ SECRET_KEY = '2e_#a(q41%lh+n77v!-1!bkh1_af)52q+qti)xcs$(-nlu#v7o' # TODO: make y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True # TODO: turn this off!
 
-ALLOWED_HOSTS = [] # TODO: include the host you're on
+ALLOWED_HOSTS = ['testserver'] # TODO: include the host you're on
 
 
 # Application definition
@@ -86,10 +86,10 @@ DATABASES = {
        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hintgen',
-        'USER': 'root',
-        'PASSWORD': 'p@ssw0rd', # TODO: use a real password
-        'HOST': '127.0.0.1', # TODO: use the real host
-        'PORT': '3306', # TODO: use a real port
+        'USER': 'postgres',
+        'PASSWORD': 'postgres', # TODO: use a real password
+        'HOST': 'localhost', # TODO: use the real host
+        'PORT': '', # TODO: use a real port
     }
 }
 

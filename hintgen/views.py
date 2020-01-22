@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
 import json, random
-from .models import *
-from .getHint import get_hint, run_tests
+from hintgen.models import *
+from hintgen.getHint import get_hint, run_tests
 
 """
 TESTING
 Use the following code to test the hint/feedback functions:
-
+"""
 from django.test import Client
 import json
 c = Client()
@@ -15,7 +15,7 @@ course_id = 1
 problem_id = 4
 data = {'student_id' : 'tester', 'code' : "def canDrinkAlcohol(age, isDriving):\n    return age > 21 and not isDriving\n" }
 response = c.post('/hintgen/hint/' + str(course_id) + '/' + str(problem_id) + '/', data=data)
-"""
+
 
 RUNNING_STUDY = False
 

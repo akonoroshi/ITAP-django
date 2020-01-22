@@ -19,4 +19,6 @@ if __name__ == "__main__":
                 "forget to activate a virtual environment?"
             )
         raise
-    execute_from_command_line(sys.argv)
+    #execute_from_command_line(sys.argv)
+    sys.path.append('./hintgen/offline_test.py')
+    exec(open("./hintgen/offline_test.py").read())

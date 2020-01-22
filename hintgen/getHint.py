@@ -386,8 +386,8 @@ def get_hint(source_state, hint_level="default"):
 				generateNextStates.getNextState(canonical_state, goals, states, best_goal)
 
 		# Then choose the best path to use
-		anon_distance, _ = diffAsts.distance(anon_state, anon_state.goal, forceReweight=True)
-		canonical_distance, _ = diffAsts.distance(canonical_state, canonical_state.goal, forceReweight=True)
+		anon_distance = diffAsts.distance(anon_state, anon_state.goal, forceReweight=True)
+		canonical_distance = diffAsts.distance(canonical_state, canonical_state.goal, forceReweight=True)
 		if anon_distance <= canonical_distance:
 			used_state = anon_state
 			other_state = canonical_state
@@ -400,6 +400,7 @@ def get_hint(source_state, hint_level="default"):
 			if used_state.next == None:
 				log("getHint\tget_hint\tCould not find next state for state " + str(used_state.id), "bug")
 				break
+			print('At least one state is examined')
 			next_state = used_state.next
 			if not hasattr(next_state, "tree"):
 				next_state.tree = str_to_tree(next_state.tree_source)
