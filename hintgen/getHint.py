@@ -187,7 +187,7 @@ def generate_anon_state(cleaned_state, given_names, imports):
 			anon_state.count += 1
 	anon_state.tree = anon_tree
 	anon_state.tree_source = tree_to_str(anon_tree)
-	anon_state = test(anon_state, forceRetest=True)
+	anon_state = test(anon_state, forceRetest=False)
 	if anon_state.score != cleaned_state.score:
 		log("getHint\tgenerate_anon_state\tScore mismatch: " + \
 			str(cleaned_state.score) + "," + str(anon_state.score) + "\n" + \
@@ -219,7 +219,7 @@ def generate_canonical_state(cleaned_state, anon_state, given_names, imports):
 		canonical_state.orig_tree_source = tree_to_str(canonical_state.orig_tree)
 		canonical_state.tree = deepcopy(canonical_state.orig_tree)
 		canonical_state = getCanonicalForm(canonical_state, given_names, args, imports)
-		canonical_state = test(canonical_state, forceRetest=True)
+		canonical_state = test(canonical_state, forceRetest=False)
 		if canonical_state.score != cleaned_state.score:
 			log("getHint\tgenerate_canonical_state\tScore mismatch: " + str(cleaned_state.score) + "," + str(canonical_state.score) + "\n" + cleaned_state.code + "\n" + canonical_state.code, "bug")
 		prior_canon = list(CanonicalState.objects.filter(problem=cleaned_state.problem, code=canonical_state.code))
@@ -386,8 +386,8 @@ def get_hint(source_state, hint_level="default"):
 				generateNextStates.getNextState(canonical_state, goals, states, best_goal)
 
 		# Then choose the best path to use
-		anon_distance = diffAsts.distance(anon_state, anon_state.goal, forceReweight=True)
-		canonical_distance = diffAsts.distance(canonical_state, canonical_state.goal, forceReweight=True)
+		anon_distance, _ = diffAsts.distance(anon_state, anon_state.goal, forceReweight=True)
+		canonical_distance, _ = diffAsts.distance(canonical_state, canonical_state.goal, forceReweight=True)
 		if anon_distance <= canonical_distance:
 			used_state = anon_state
 			other_state = canonical_state
@@ -400,7 +400,6 @@ def get_hint(source_state, hint_level="default"):
 			if used_state.next == None:
 				log("getHint\tget_hint\tCould not find next state for state " + str(used_state.id), "bug")
 				break
-			print('At least one state is examined')
 			next_state = used_state.next
 			if not hasattr(next_state, "tree"):
 				next_state.tree = str_to_tree(next_state.tree_source)
